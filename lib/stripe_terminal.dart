@@ -17,12 +17,9 @@ class StripeTerminal {
   // Method Channel on which the package operates with the native platform.
   static const MethodChannel _channel = MethodChannel('stripe_terminal');
   final Future<String> Function() _fetchToken;
-  StreamController<dynamic> _collectingPaymentStreamController =
-      StreamController.broadcast();
-  StreamController<StripeReader> _unexpectedDisconnectionStreamController =
-      StreamController.broadcast();
-  StreamController<dynamic> _waitingForInputStreamController =
-      StreamController.broadcast();
+  StreamController<dynamic> _collectingPaymentStreamController = StreamController.broadcast();
+  StreamController<StripeReader> _unexpectedDisconnectionStreamController = StreamController.broadcast();
+  StreamController<dynamic> _waitingForInputStreamController = StreamController.broadcast();
 
   /// Creates an internal `StripeTerminal` instance
   StripeTerminal._internal({
@@ -100,6 +97,7 @@ class StripeTerminal {
   Future<bool> connectToReader(
     /// Serial number of the reader to connect with
     String readerSerialNumber, {
+
     /// The id of the location on which you want to conenct this bluetooth reader with.
     ///
     /// Either you have to provide a location here or the device should already be registered to a location
@@ -125,10 +123,8 @@ class StripeTerminal {
     String readerSerialNumber, {
     /// The id of the location on which you want to conenct this local mobile reader with.
     String? locationId,
-
     /// The id of the connected account on which you want to create the destination charge (the on_behalf_of parameter)
     String? onBehalfOf,
-
     /// Buyer-facing name to display on the payment collection screen
     String? displayName,
   }) async {
@@ -152,6 +148,7 @@ class StripeTerminal {
   Future<bool> connectBluetoothReader(
     /// Serial number of the bluetooth reader to connect with
     String readerSerialNumber, {
+
     /// The id of the location on which you want to conenct this bluetooth reader with.
     ///
     /// Either you have to provide a location here or the device should already be registered to a location
@@ -176,6 +173,7 @@ class StripeTerminal {
   Future<bool> connectToInternetReader(
     /// Serial number of the internet reader to connect with
     String readerSerialNumber, {
+
     /// Weather the connection process should fail if the device is already in use
     bool failIfInUse = false,
   }) async {
@@ -296,6 +294,7 @@ class StripeTerminal {
   Future<StripePaymentIntent> collectPaymentMethod(
     // Client secret of the payment intent which you want to collect payment mwthod for
     String clientSecret, {
+
     /// Configruation for the collection process
     CollectConfiguration? collectConfiguration = const CollectConfiguration(
       skipTipping: true,
@@ -319,8 +318,7 @@ class StripeTerminal {
 
   /// Checks if TTPOI is supported
   Future<bool> tapToPayOnIphoneIsSupported() async {
-    bool? isSupported =
-        await _channel.invokeMethod<bool>("tapToPayOnIphoneIsSupported");
+    bool? isSupported = await _channel.invokeMethod<bool>("tapToPayOnIphoneIsSupported");
     if (isSupported == null) {
       throw Exception("Unable to know if Tap to Pay on iPhone is supported");
     } else {
